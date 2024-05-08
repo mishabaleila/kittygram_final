@@ -1,7 +1,6 @@
-.env
 venv
 .git
 db.sqlite3
-/etc
-/log
+.idea
 .vscode
+.env
