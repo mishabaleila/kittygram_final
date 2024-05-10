@@ -1,15 +1,17 @@
 import os
 from pathlib import Path
 
+from django.core.management.utils import get_random_secret_key
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'default_secret_key_value')
+SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = [
-    '158.160.70.125', '127.0.0.1', 'localhost', 'kittygramproj.hopto.org'
-]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'False').split(',')
+
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -56,15 +58,16 @@ WSGI_APPLICATION = 'kittygram_backend.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'django'),
-        'USER': os.getenv('POSTGRES_USER', 'django'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', ''),
-        'PORT': os.getenv('DB_PORT', 5432)
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': os.getenv('POSTGRES_DB', 'kittygram'),
+       'USER': os.getenv('POSTGRES_USER', 'kittygram_user'),
+       'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'kittygram_password'),
+       'HOST': os.getenv('DB_HOST', 'db'),
+       'PORT': os.getenv('DB_PORT', 5432)
+   }
 }
+
 
 
 # Password validation
@@ -97,7 +100,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'collected_static'
+STATIC_ROOT = '/backend_static/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -19,6 +19,8 @@ services:
     volumes:
       - static_volume:/backend_static
       - media:/media
+    depends_on:
+      - db
 
   frontend:
     image: mishabaleila/kittygram_frontend
@@ -36,3 +38,5 @@ services:
       - media:/media
     ports:
       - 9000:80
+    depends_on:
+      - backend
