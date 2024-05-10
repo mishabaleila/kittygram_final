@@ -162,6 +162,4 @@ jobs:
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: |
           Деплой успешно выполнен!
-          🚀 Коммит: ${GITHUB_ACTOR} залит в репозиторий.
-          📝 Сообщение коммита: ${GITHUB_EVENT.commits[0].message}
           🔗 Ссылка на коммит: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
